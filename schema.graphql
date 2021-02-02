@@ -1,0 +1,130 @@
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+# Exposes a URL that specifies the behaviour of this scalar.
+directive @specifiedBy(
+  # The URL that specifies the behaviour of this scalar.
+  url: String!
+) on SCALAR
+
+type Address {
+  street: String!
+  suite: String!
+  city: String!
+  zipcode: String!
+  geo: Geo!
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type Comment {
+  id: ID!
+  body: String!
+  post: Post!
+  author: User!
+}
+
+input CommentInput {
+  postId: Int!
+  userId: Int!
+  body: String!
+}
+
+input CommentUpdateInput {
+  body: String
+}
+
+type CommentWithPagination {
+  count: Int!
+  currentPage: Int!
+  totalPages: Int!
+  data: [Comment!]
+}
+
+type Company {
+  name: String!
+  catchPhrase: String!
+  bs: String!
+}
+
+type Geo {
+  lat: Float!
+  lng: Float!
+}
+
+type Mutation {
+  addPost(data: PostInput!): Post!
+  updatePost(postId: ID!, data: PostUpdateInput!): Post!
+  deletePost(postId: ID!): Post!
+  addComment(data: CommentInput!): Comment!
+  updateComment(commentId: ID!, data: CommentUpdateInput!): Comment!
+  deleteComment(commentId: ID!): Comment!
+}
+
+input PaginationInput {
+  limit: Int = 10
+  page: Int = 1
+}
+
+type Post {
+  id: ID!
+  title: String!
+  body: String!
+  author: User!
+  comments: [Comment!]!
+}
+
+input PostInput {
+  userId: Int!
+  title: String!
+  body: String!
+}
+
+input PostUpdateInput {
+  userId: Int
+  title: String
+  body: String
+}
+
+type PostWithPagination {
+  count: Int!
+  currentPage: Int!
+  totalPages: Int!
+  data: [Post!]
+}
+
+type Query {
+  user(userId: Int!): User!
+  users(pagination: PaginationInput): UserWithPagination!
+  post(postId: ID!): Post!
+  posts(pagination: PaginationInput): PostWithPagination!
+  comment(commentId: ID!): Comment!
+  comments(pagination: PaginationInput): CommentWithPagination!
+}
+
+# The `Upload` scalar type represents a file upload.
+scalar Upload
+
+type User {
+  id: ID!
+  name: String!
+  username: String!
+  email: String!
+  address: Address
+  phone: String!
+  website: String!
+  company: Company!
+  posts: [Post!]!
+}
+
+type UserWithPagination {
+  count: Int!
+  currentPage: Int!
+  totalPages: Int!
+  data: [User!]
+}
