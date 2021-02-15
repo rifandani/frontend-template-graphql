@@ -16,7 +16,7 @@ const USERS = gql`
   }
 `
 
-const HomeComp = (): JSX.Element => {
+const HomeComp: React.FC = () => {
   const { loading, error, data, networkStatus } = useQuery<
     UsersData,
     UsersVars
@@ -31,7 +31,7 @@ const HomeComp = (): JSX.Element => {
   })
 
   return (
-    <main className="items-center w-full min-h-screen bg-blue-100">
+    <main className="items-center w-full min-h-screen bg-teal-400">
       {networkStatus === NetworkStatus.refetch && 'Refetching!'}
 
       {(loading || !data) && 'Loading...'}

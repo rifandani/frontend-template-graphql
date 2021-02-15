@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: [
     'src/components/**/*.{js,ts,jsx,tsx}',
@@ -7,7 +9,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'accent-1': '#333',
+        blueGray: colors.blueGray,
+        trueGray: colors.trueGray,
+        lime: colors.lime,
+        teal: colors.teal,
+        cyan: colors.cyan,
+        fuchsia: colors.fuchsia,
+        rose: colors.rose,
       },
       spacing: {
         72: '18rem',
